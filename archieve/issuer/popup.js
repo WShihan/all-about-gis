@@ -4,6 +4,10 @@ let descEle = document.getElementById('desc');
 let langEle = document.getElementById('lang');
 let loadingEle = document.getElementById('loading');
 let buttonEle = document.getElementById('buttons');
+let topicEle = document.getElementById('topic');
+
+const optionKey = 'options';
+const draftKey = 'draft';
 
 let credentials = {
   token: null,
@@ -11,37 +15,54 @@ let credentials = {
   repo: null,
 };
 
-chrome.storage.sync.get('token').then(data => {
-  const { token } = data;
-  console.log(data);
-  if (typeof token != 'undefined' || token != '') {
-    credentials.token = token;
-  }
+let draft = {
+  title: null,
+  link: null,
+  desc: null,
+  lang: null,
+  topic: null,
+};
+
+// 获取配置信息
+chrome.storage.sync.get(optionKey).then(data => {
+  let savedData = JSON.parse(data[optionKey]);
+  Object.assign(credentials, savedData);
 });
 
-chrome.storage.sync.get('user').then(data => {
-  const { user } = data;
-  console.log(data);
-  if (typeof user != 'undefined' || user != '') {
-    credentials.user = user;
-  }
+// 获取草稿
+chrome.storage.sync.get(draftKey).then(data => {
+  let savedData = JSON.parse(data[draftKey]);
+  Object.assign(draft, savedData);
 });
 
-chrome.storage.sync.get('repo').then(data => {
-  const { repo } = data;
-  console.log(data);
-  if (typeof repo != 'undefined' || repo != '') {
-    credentials.repo = repo;
-  }
-});
-
+// 获取当前标签页信息：URL，以及标题
 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
   let currentTab = tabs[0];
   linkELe.value = currentTab.url;
   titleEle.value = currentTab.title;
 });
 
-document.getElementById('submit').addEventListener('click', function () {
+// 保存事件
+document.getElementById('save').addEventListener('click', function (evt) {
+  draft.topic = topicEle.value;
+  draft.desc = descEle.value;
+  draft.title = titleEle.value;
+  draft.link = linkELe.value;
+  draft.lang = langEle.value;
+  save(draftKey, draft);
+});
+
+// 恢复事件
+document.getElementById('restore').addEventListener('click', function (evt) {
+  titleEle.value = draft.title;
+  linkELe.value = draft.link;
+  descEle.value = draft.desc;
+  langEle.value = draft.lang;
+  topicEle.value = draft.topic;
+});
+
+// 创建issue
+document.getElementById('submit').addEventListener('click', function (evt) {
   let topic = document.getElementById('topic').value;
   let desc = descEle.value;
   let title = titleEle.value;
@@ -53,14 +74,23 @@ document.getElementById('submit').addEventListener('click', function () {
       return;
     }
 
+    let content =
+      topic == '文章' ? `【${lange}】[${title}](${link})\n${desc}` : `[${title}](${link})\n${desc}`;
     let data = {
       title,
-      body: `【${lange}】[${title}](${link})\n${desc}`,
+      body: content,
       assignees: ['WShihan'],
       labels: [topic],
     };
 
-    if (credentials.token == null || credentials.user == null || credentials.repo == null) {
+    if (
+      credentials.token == null ||
+      credentials.user == null ||
+      credentials.repo == null ||
+      credentials.token == '' ||
+      credentials.user == '' ||
+      credentials.repo == ''
+    ) {
       alert('请先保存github账号信息');
       return;
     }
@@ -100,6 +130,13 @@ function clear() {
   linkELe.value = '';
   descEle.value = '';
 }
+
+function save(key, data) {
+  chrome.storage.sync.set({ [key]: JSON.stringify(data) }, function () {
+    alert('保存成功');
+  });
+}
+
 document.getElementById('clear').addEventListener('click', () => {
   clear();
 });

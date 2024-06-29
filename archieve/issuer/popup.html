@@ -24,7 +24,7 @@
 
       .btn {
         margin: 10px auto;
-        gap: 20%;
+        gap: 10%;
       }
       input,
       select,
@@ -51,6 +51,22 @@
         width: inherit;
         height: inherit;
         animation: rotate 2s linear infinite;
+      }
+      button {
+        border: none;
+        cursor: pointer;
+      }
+      #submit {
+        background-color: rgb(135, 222, 135);
+      }
+      #clear {
+        background-color: rgb(230, 136, 136);
+      }
+      #save {
+        background-color: rgb(166, 189, 246);
+      }
+      #restore {
+        background-color: rgb(224, 224, 110);
       }
     </style>
   </head>
@@ -107,7 +123,9 @@
         </div>
       </div>
       <div class="btn" id="buttons">
-        <button id="submit">创建</button>
+        <button id="submit" >创建</button>
+        <button id="save">保存</button>
+        <button id="restore">恢复</button>
         <button id="clear">清空</button>
       </div>
     </div>
