@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>issuer 设置</title>
+    <style>
+        .opt {
+            width: 60%;
+            margin: 0 auto;
+        }
+        .opt-item {
+            display: flex;
+            justify-content: center;
+            gap:10px;
+            margin: 10px auto;
+        }
+        input {
+            flex: 1;
+            height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="opt">
+        <h2>输入github相关信息</h2>
+        <div class="opt-item">
+            <label for="token">密钥</label>
+            <input type="password" id="token">
+            <button id="saveToken">保存</button>
+        </div>
+        <div class="opt-item">
+            <label for="user">用户</label>
+            <input type="user" id="user">
+            <button id="saveUser">保存</button>
+        </div>
+        <div class="opt-item">
+            <label for="user">仓库</label>
+            <input type="repo" id="repo">
+            <button id="saveRepo">保存</button>
+        </div>
+
+        <script src="options.js" defer></script>
+    </div>
+</body>
+</html>
