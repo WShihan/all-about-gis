@@ -1,4 +1,4 @@
-**All about GIS**  一个开源的半月刊，计划每月初/中更新，分享一切关于GIS的内容，包括阅读到的文章，偶然发现的工具，以及数据分享等。 欢迎任何人提交内容。
+**All about GIS**  一个开源的信息合集，计划每月初/中更新，分享一切关于GIS的内容，包括阅读到的文章，偶然发现的工具，以及数据分享等。 欢迎任何人提交内容。
 
 [仓库](https://github.com/WShihan/all-about-gis)｜[RSS](/all-about-gis/feed.xml)
 

@@ -1,7 +1,7 @@
 **All about GIS**
 ===
 
-这是一份与GIS内容相关的仓库，受[ALL-about-RSS](https://github.com/AboutRSS/ALL-about-RSS)启发，包含开源软件，编程语言库以及文章链接，刚开始记录，内容不全且很少，欢迎参与完善，你可以<a href="./archieve/issuer/README.md">这个工具</a>提交。
+这是一份与GIS内容相关的仓库，受[All-about-RSS](https://github.com/AboutRSS/ALL-about-RSS)启发，包含开源软件，编程语言库以及文章链接，刚开始记录，内容不全且很少，欢迎参与完善，你可以<a href="./archieve/issuer/README.md">浏览器工具</a>以issue到形式提交内容。
 
 关于什么是GIS，你可以在如下文章里找到答案：
 
