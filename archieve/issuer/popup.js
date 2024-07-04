@@ -11,8 +11,8 @@ const draftKey = 'draft';
 
 let credentials = {
   token: null,
-  user: null,
-  repo: null,
+  user: 'WShihan',
+  repo: 'all-about-gis',
 };
 
 let draft = {
@@ -26,7 +26,7 @@ let draft = {
 // 获取配置信息
 chrome.storage.sync.get(optionKey).then(data => {
   let savedData = JSON.parse(data[optionKey]);
-  Object.assign(credentials, savedData);
+  credentials.token = savedData.token;
 });
 
 // 获取草稿
@@ -83,14 +83,7 @@ document.getElementById('submit').addEventListener('click', function (evt) {
       labels: [topic],
     };
 
-    if (
-      credentials.token == null ||
-      credentials.user == null ||
-      credentials.repo == null ||
-      credentials.token == '' ||
-      credentials.user == '' ||
-      credentials.repo == ''
-    ) {
+    if (credentials.token == null || credentials.token == '') {
       alert('请先保存github账号信息');
       return;
     }
