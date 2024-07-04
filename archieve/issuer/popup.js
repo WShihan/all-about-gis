@@ -13,6 +13,7 @@ let credentials = {
   token: null,
   user: 'WShihan',
   repo: 'all-about-gis',
+  email: null,
 };
 
 let draft = {
@@ -27,6 +28,7 @@ let draft = {
 chrome.storage.sync.get(optionKey).then(data => {
   let savedData = JSON.parse(data[optionKey]);
   credentials.token = savedData.token;
+  credentials.email = savedData.email;
 });
 
 // 获取草稿
@@ -63,6 +65,31 @@ document.getElementById('restore').addEventListener('click', function (evt) {
 
 // 创建issue
 document.getElementById('submit').addEventListener('click', function (evt) {
+  submit('issue');
+});
+
+// 创建邮箱issue
+document.getElementById('submitByEmail').addEventListener('click', function (evt) {
+  submit('email');
+});
+
+function clear() {
+  titleEle.value = '';
+  linkELe.value = '';
+  descEle.value = '';
+}
+
+function save(key, data) {
+  chrome.storage.sync.set({ [key]: JSON.stringify(data) }, function () {
+    alert('保存成功');
+  });
+}
+
+document.getElementById('clear').addEventListener('click', () => {
+  clear();
+});
+
+function submit(which) {
   let topic = document.getElementById('topic').value;
   let desc = descEle.value;
   let title = titleEle.value;
@@ -83,19 +110,38 @@ document.getElementById('submit').addEventListener('click', function (evt) {
       labels: [topic],
     };
 
-    if (credentials.token == null || credentials.token == '') {
+    if (
+      credentials.token == null ||
+      credentials.token == '' ||
+      credentials.email == null ||
+      credentials.email == ''
+    ) {
       alert('请先保存github账号信息');
       return;
     }
     loadingEle.style.display = 'block';
     buttonEle.style.visibility = 'hidden';
-    fetch(`https://api.github.com/repos/${credentials.user}/${credentials.repo}/issues`, {
-      method: 'POST',
-      headers: {
+
+    let api;
+    let headers;
+    if (which == 'issue') {
+      api = `https://api.github.com/repos/${credentials.user}/${credentials.repo}/issues`;
+      headers = {
         Accept: 'application/vnd.github+json',
         Authorization: `Bearer ${credentials.token}`,
         'X-GitHub-Api-Version': '2022-11-28',
-      },
+      };
+    } else {
+      api = 'https://wsh233.cn/api/issue';
+      headers = {
+        'Content-Type': 'application/json',
+        email: credentials.email,
+      };
+    }
+
+    fetch(api, {
+      method: 'POST',
+      headers: headers,
       body: JSON.stringify(data),
     })
       .then(response => response.json())
@@ -116,20 +162,4 @@ document.getElementById('submit').addEventListener('click', function (evt) {
     console.log(e);
     alert('提交失败');
   }
-});
-
-function clear() {
-  titleEle.value = '';
-  linkELe.value = '';
-  descEle.value = '';
 }
-
-function save(key, data) {
-  chrome.storage.sync.set({ [key]: JSON.stringify(data) }, function () {
-    alert('保存成功');
-  });
-}
-
-document.getElementById('clear').addEventListener('click', () => {
-  clear();
-});
