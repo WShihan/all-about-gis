@@ -23,8 +23,9 @@
       }
 
       .btn {
+        flex-wrap: wrap;
         margin: 10px auto;
-        gap: 10%;
+        gap: 20px;
       }
       input,
       select,
@@ -55,8 +56,10 @@
       button {
         border: none;
         cursor: pointer;
+        padding: 5px;
+        border-radius: 3px;
       }
-      #submit {
+      #submit, #submitByEmail {
         background-color: rgb(135, 222, 135);
       }
       #clear {
@@ -123,10 +126,11 @@
         </div>
       </div>
       <div class="btn" id="buttons">
-        <button id="submit" >创建</button>
         <button id="save">保存</button>
         <button id="restore">恢复</button>
         <button id="clear">清空</button>
+        <button id="submit" >通过Token提交</button>
+        <button id="submitByEmail" >通过邮箱提交</button>
       </div>
     </div>
 

@@ -3,10 +3,12 @@ issuer插件使用
 
 [All-about-GIS](https://github.com/WShihan/all-about-gis) 附属的浏览器收集插件，可以将网页以`issue`的形式提交到All-about-GIS。
 
-必须使用GitHub Personal Access Token才可以进行相关自动化活动，**issuer**不会单独保管或者泄露token，一切敏感信息都将保存在你的本地电脑上。
+支持通过GitHub Personal Access Token直接创建issue，或者通过邮箱间接创建issue，**issuer**不会单独保管或者泄露token和邮箱，一切敏感信息都将保存在你的本地电脑上。
+
+
 
 <p align="center">
-  <img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704135029929.png" alt="image-20240629143010453" style="width:200px;" />
+  <img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704171218083.png" alt="image-20240629143010453" style="width:200px;" />
 </p>
 
 
@@ -15,7 +17,7 @@ issuer插件使用
 
 ## 获取token
 
-前往[GitHub](https://github.com/)进入主页，登录后点击头像，选择【Settings】
+通过邮箱可跳过此章节，前往[GitHub](https://github.com/)进入主页，登录后点击头像，选择【Settings】
 
 <p align="center"></p>
 
@@ -50,9 +52,13 @@ issuer插件使用
 
 <p align="center"><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704143008361.png" alt="image-20240629062846368" style="width:30%;" /></p>
 
-分别将`token`，`github用户名`，`该用户所属仓库名`填入，保存
 
-<img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704135111782.png" alt="image-20240629063402257" style="width:100%;" />
+
+将Github Personal Access Token或者邮箱填入，保存
+
+![image-20240704170316865](https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704170316865.png)
+
+
 
 
 
@@ -60,17 +66,13 @@ issuer插件使用
 
 阅读当前网页时，点击插件，会自动获取网页`链接`和网页`标题`，然后可以手动修改它们，
 
-<img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704135711674.png" alt="image-20240629064450623" style="width:100%;" />
+![image-20240704171150138](https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704171150138.png)
 
 接着完善其他信信息，比如语言，提交类型以及描述等。描述是当前链接内容的介绍或者自己的阅读感悟，点击【保存】将当前编辑的信息保存到本地，关闭插件之后再打开，点击【恢复】将会恢复已保存的信息。
 
 点击【清空】将一键清空信息，恢复为默认状态。
 
-<img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704140025597.png" alt="image-20240704140025597" />
-
 点击【创建】按钮，将会根据填写的信息向github仓库创建一条issue。
-
-![image-20240704140120252](https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704140120252.png)
 
 此时打开`Github`，能看见创建了一个新的issue。
 
@@ -83,26 +85,6 @@ issuer插件使用
 <img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/pic/typora/image-20240704140402426.png" alt="image-20240704140402426" />
 
 
-
-# 其他提交方式
-
-### 通过直接创建issue
-
-所有的信息收集都将基于github平台，提交issue是最简单，且对自动化友好度最高的方式，你可以选择不通过插件提交issue，但请遵循基本的格式（markdown语法），如下
-
-```text
-【语言】[标题](链接)
-文章/工具/数据分享的描述
-```
-
-⚠️主意：issue的标签当前仅支持`文章`,`工具`,`数据分享`
-
-### 通过邮箱
-
-如果你没有Github账户，那么可以选择通过电子邮件的方式提交到`3443327820@qq.com`，记得：
-
-* 邮件主题为`标题｜类型｜语言｜链接`的形式。
-* 邮件正文为描述信息。
 
 
 
