@@ -12,7 +12,7 @@
 往期
 ===
 
-[issue-1](/issues/issue-1.md)
+[issue-1](/issues/issue-1.md)  [issue-2](/issues/issue-2.md)
 
 
 
