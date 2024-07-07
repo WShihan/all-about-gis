@@ -5,9 +5,19 @@ let langEle = document.getElementById('lang');
 let loadingEle = document.getElementById('loading');
 let buttonEle = document.getElementById('buttons');
 let topicEle = document.getElementById('topic');
+let tipEle = document.getElementById('tip');
 
 const optionKey = 'options';
 const draftKey = 'draft';
+
+class TipType {
+  static Success = '✅ 操作成功！';
+  static Error = '❌ 操作失败！';
+  static Null = '-_-';
+  static Info = '✅ 操作成功！';
+}
+
+let timer;
 
 let credentials = {
   token: null,
@@ -56,11 +66,13 @@ document.getElementById('save').addEventListener('click', function (evt) {
 
 // 恢复事件
 document.getElementById('restore').addEventListener('click', function (evt) {
+  clearTip();
   titleEle.value = draft.title;
   linkELe.value = draft.link;
   descEle.value = draft.desc;
   langEle.value = draft.lang;
   topicEle.value = draft.topic;
+  tip(TipType.Success);
 });
 
 // 创建issue
@@ -77,11 +89,14 @@ function clear() {
   titleEle.value = '';
   linkELe.value = '';
   descEle.value = '';
+  clearTip();
+  tip(TipType.Success);
 }
 
 function save(key, data) {
+  clearTip();
   chrome.storage.sync.set({ [key]: JSON.stringify(data) }, function () {
-    alert('保存成功');
+    tip(TipType.Success);
   });
 }
 
@@ -97,7 +112,7 @@ function submit(which) {
   let lange = langEle.value;
   try {
     if (title == '' || topic == '' || desc == '' || link == '' || lange == '') {
-      alert('请填写完整信息');
+      tip('❌ 请填写完整信息!');
       return;
     }
 
@@ -116,7 +131,7 @@ function submit(which) {
       credentials.email == null ||
       credentials.email == ''
     ) {
-      alert('请先保存github账号信息');
+      tip('❌ 请先设置插件配置信息');
       return;
     }
     loadingEle.style.display = 'block';
@@ -138,7 +153,7 @@ function submit(which) {
         email: credentials.email,
       };
     }
-
+    clearTip();
     fetch(api, {
       method: 'POST',
       headers: headers,
@@ -147,12 +162,11 @@ function submit(which) {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        alert('提交成功');
-        clear();
+        tip(TipType.Success);
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('提交失败');
+        tip(TipType.Error);
       })
       .finally(() => {
         loadingEle.style.display = 'none';
@@ -160,6 +174,23 @@ function submit(which) {
       });
   } catch (e) {
     console.log(e);
-    alert('提交失败');
+    tip(TipType.Error);
+  }
+}
+
+function tip(msg) {
+  tipEle.style.visibility = 'visible';
+  tipEle.innerText = msg;
+  timer = setTimeout(() => {
+    clearTip();
+  }, 3000);
+}
+
+function clearTip() {
+  tipEle.style.visibility = 'hidden';
+  tipEle.innerText = TipType.Null;
+  if (typeof timer !== 'undefined') {
+    clearTimeout(timer);
+    timer = undefined;
   }
 }
