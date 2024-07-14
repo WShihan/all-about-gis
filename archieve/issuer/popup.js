@@ -125,17 +125,7 @@ function submit(which) {
       labels: [topic],
     };
 
-    if (
-      credentials.token == null ||
-      credentials.token == '' ||
-      credentials.email == null ||
-      credentials.email == ''
-    ) {
-      tip('❌ 请先设置插件配置信息');
-      return;
-    }
-    loadingEle.style.display = 'block';
-    buttonEle.style.visibility = 'hidden';
+
 
     let api;
     let headers;
@@ -146,14 +136,24 @@ function submit(which) {
         Authorization: `Bearer ${credentials.token}`,
         'X-GitHub-Api-Version': '2022-11-28',
       };
+      if (credentials.token == null || credentials.token == '') {
+        tip('❌ 请先设置Github密钥');
+        return;
+      }
     } else {
       api = 'https://wsh233.cn/api/issue';
       headers = {
         'Content-Type': 'application/json',
         email: credentials.email,
       };
+      if (credentials.email == null || credentials.email == '') {
+        tip('❌ 请先设邮箱');
+        return;
+      }
     }
     clearTip();
+    loadingEle.style.display = 'block';
+    buttonEle.style.visibility = 'hidden';
     fetch(api, {
       method: 'POST',
       headers: headers,
