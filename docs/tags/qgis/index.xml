@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>QGIS on All about GIS</title>
-        <link>https://wshihan.github.io/all-about-gis/tags/qgis/</link>
+        <link>http://localhost:1313/tags/qgis/</link>
         <description>Recent content in QGIS on All about GIS</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>All about GIS</copyright>
-        <lastBuildDate>Thu, 13 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://wshihan.github.io/all-about-gis/tags/qgis/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 13 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/qgis/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>批量裁剪矢量数据的几种途径</title>
-        <link>https://wshihan.github.io/all-about-gis/p/%E6%89%B9%E9%87%8F%E8%A3%81%E5%89%AA%E7%9F%A2%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%87%A0%E7%A7%8D%E9%80%94%E5%BE%84/</link>
+        <link>http://localhost:1313/p/%E6%89%B9%E9%87%8F%E8%A3%81%E5%89%AA%E7%9F%A2%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%87%A0%E7%A7%8D%E9%80%94%E5%BE%84/</link>
         <pubDate>Thu, 13 Mar 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://wshihan.github.io/all-about-gis/p/%E6%89%B9%E9%87%8F%E8%A3%81%E5%89%AA%E7%9F%A2%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%87%A0%E7%A7%8D%E9%80%94%E5%BE%84/</guid>
+        <guid>http://localhost:1313/p/%E6%89%B9%E9%87%8F%E8%A3%81%E5%89%AA%E7%9F%A2%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%87%A0%E7%A7%8D%E9%80%94%E5%BE%84/</guid>
         <description>&lt;p&gt;近些天，有一个项目需要对大量的地理数据进行统计，然后在前端展示，作为组里为数不多拥有GIS专业背景的人，毫无意外地任务又落在我身上。&lt;/p&gt;
 &lt;p&gt;该任务统计过程其实简单，难点在于数据量实在是太大，还要经过空间运算、采样后才能着手统计，而且需求端（前端）的目的一开始不是很明确，扔过来一个截图文件，先是统计这个、后又统计那个、再这个，统计后交换数据结构也是时常变化，本来数据量就大，前后折腾耗了很多时间，又一个面向口头约定编程的经典案例。&lt;/p&gt;
 &lt;p&gt;如果是小量数据，直接无脑上GIS软件就行，可是它不行，所以我想着写份代码一劳永逸地解决诸如此类的问题，此时眉头一皱，GDAL 涌上心头。&lt;/p&gt;

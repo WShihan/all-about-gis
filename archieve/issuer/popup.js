@@ -117,15 +117,13 @@ function submit(which) {
     }
 
     let content =
-      topic == '文章' ? `【${lange}】[${title}](${link})\n${desc}` : `[${title}](${link})\n${desc}`;
+      topic == '文章' ? `【${lange}】[链接](${link})\n${desc}` : `[${title}](${link})\n${desc}`;
     let data = {
       title,
       body: content,
       assignees: ['WShihan'],
       labels: [topic],
     };
-
-
 
     let api;
     let headers;
