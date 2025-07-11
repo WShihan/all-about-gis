@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/all-about-gis/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=all-about-gis/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="线段简化的几种算法">
+<title>线段简化的几种算法</title>
+
+<link rel='canonical' href='http://localhost:1313/all-about-gis/p/%E7%BA%BF%E6%AE%B5%E7%AE%80%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/'>
+
+<link rel="stylesheet" href="/all-about-gis/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="线段简化的几种算法">
+<meta property='og:description' content="线段简化的几种算法">
+<meta property='og:url' content='http://localhost:1313/all-about-gis/p/%E7%BA%BF%E6%AE%B5%E7%AE%80%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/'>
+<meta property='og:site_name' content='All about GIS'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='算法' /><meta property='article:tag' content='线段简化' /><meta property='article:tag' content='Python' /><meta property='article:published_time' content='2020-09-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2020-09-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="线段简化的几种算法">
+<meta name="twitter:description" content="线段简化的几种算法">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/all-about-gis/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/all-about-gis/img/avatar_hu_3f7e7836c53ddc22.png" width="300"
+                            height="316" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/all-about-gis">All about GIS</a></h1>
+            <h2 class="site-description">只关于GIS</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/WShihan/all-about-gis'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/all-about-gis/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>查找</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/all-about-gis/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" >
+                数据处理
+            </a>
+        
+            <a href="/all-about-gis/categories/%E7%A9%BA%E9%97%B4%E8%BF%90%E7%AE%97/" >
+                空间运算
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/all-about-gis/p/%E7%BA%BF%E6%AE%B5%E7%AE%80%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95/">线段简化的几种算法</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            线段简化的几种算法
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 09, 2020</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>翻译自:https://www.codeproject.com/Articles/114797/Polyline-Simplification#headingDPN</p>
+<p>整个记录关于算法的部分是翻译来的，原作者实现的语言是C++，但是我看不懂这类代码，于是自己用Python实现了一遍，其中可能会有错误的地方，欢迎指出来让我改正。</p>
+<p>[TOC]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">shapefile</span> <span class="kn">import</span> <span class="n">Reader</span><span class="p">,</span> <span class="n">Writer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 该shapefile文件内含一条线段，坐标系为：3857</span>
+</span></span><span class="line"><span class="cl"><span class="n">shp</span> <span class="o">=</span> <span class="n">Reader</span><span class="p">(</span><span class="s1">&#39;./vector/lyr_line.shp&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">feat</span> <span class="o">=</span> <span class="n">shp</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 保存为shapefile文件</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">shpGen</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">pts</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span> <span class="o">=</span> <span class="n">Writer</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">shapeType</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">shp</span><span class="o">.</span><span class="n">fields</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span><span class="o">.</span><span class="n">line</span><span class="p">([</span><span class="n">pts</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">&#34;测试&#34;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 点到线距离</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">point2lineDistance</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">y2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span><span class="n">x2</span> <span class="o">-</span><span class="n">x1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">x1</span><span class="o">-</span>  <span class="n">a</span><span class="o">*</span><span class="n">y1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">y0</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="n">x0</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># return abs((x2-x1)*(y1-y0)-(x1-x0)*(y2-y1)) / math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 点到点距离</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">point2pointDistance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">y2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span><span class="o">-</span><span class="n">x1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span><span class="o">-</span><span class="n">y1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span><span class="o">*</span><span class="n">dx</span><span class="o">+</span><span class="n">dy</span><span class="o">*</span><span class="n">dy</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 绘制</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">plotLine</span><span class="p">(</span><span class="n">pts</span><span class="p">,</span> <span class="n">simplifyLst</span><span class="p">,</span> <span class="n">newlabel</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r-*&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">mec</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">simplifyLst</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">simplifyLst</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;b-s&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">mec</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">newlabel</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="radial-distance">Radial Distance
+</h1><p>该算法是一个时间复杂度为${O(n)}$的暴力算法。在连续的顶点中，与当前某一个key（简化过程中标记保留的顶点）的距离太近时会被去掉。<br>
+起止顶点一般会保留作为简化线的一部分，故标记为key，从第一个key（第一个顶点）开始，算法将遍历整条线段，所有连续顶点中，移除那些距离不超过容忍值的顶点，而第一个超过容忍值的顶点将标记为下一个key，从新key开始，算法重新遍历余下的点并重复上述过程，直到最后一个点。</p>
+<center><img src="http://www.xiemolin233.cn/file/psimpl_rd.png"/></center>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">NearestSimplify</span><span class="p">(</span><span class="n">tolorence</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">pts</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&#34;bool&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dist</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span> <span class="n">pts</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                         <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pts</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">dist</span> <span class="o">&gt;</span> <span class="n">tolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">validFlags</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">validFlags</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">flags</span> <span class="o">=</span>  <span class="n">NearestSimplify</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">flags</span><span class="p">],</span> <span class="s2">&#34;Radial Distance&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_9_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">flags</span> <span class="o">=</span>  <span class="n">NearestSimplify</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">flags</span><span class="p">],</span> <span class="s2">&#34;Radial Distance&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_10_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<h1 id="perpendicular-distance">Perpendicular Distance
+</h1><p>临近点算法将点-点距离作为误差判据，而垂直距离简化则是将点-线段的距离作为误差判据。对于每个顶点Vi，需要计算它与线段[Vi-1， Vi+1]的垂直距离，距离小于给定容忍值的点将被移除。过程如下图所示：</p>
+<center><img src="http://www.xiemolin233.cn/file/psimpl_pd.png"></center>
+<p>最开始处理前三个顶点，计算第二个顶点的垂直距离，与容忍值作比较，大于则标记为key。然后算法往前移动开始处理下一个前三个顶点，第二次距离小于容忍值，移除中间顶点。重复直到处理所有顶点。<br>
+<em>注意</em>：对于每个被移除的顶点Vi，下一个可能被移除的候选顶点是Vi+2。这意味着原始多段线的点数最多只能减少50%。为了获得更高的顶点减少率，需要多次遍历。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">PerpendicularSimplify</span><span class="p">(</span><span class="n">tolorence</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">pts</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sp</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ep</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&#34;bool&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">verDist</span> <span class="o">=</span> <span class="n">point2lineDistance</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">sp</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">sp</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">ep</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">ep</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verDist</span> <span class="o">&gt;</span> <span class="n">tolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">validFlags</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sp</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ep</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">validFlags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">validFlags</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">perLine</span> <span class="o">=</span> <span class="n">PerpendicularSimplify</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">perLine</span><span class="p">],</span> <span class="s2">&#34;Perpendicular Distance&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_14_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">perLine</span> <span class="o">=</span> <span class="n">PerpendicularSimplify</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">perLine</span><span class="p">],</span> <span class="s2">&#34;Perpendicular Distance&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_15.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<h1 id="reumann-witkam">Reumann-Witkam
+</h1><p>该算法使用点-线距离作距离判断。首先定义一条线段，起止点为原始线段的前两个顶点，对于每一个连续的顶点vi，计算它与前述线段的垂直距离，当距离超过容忍值时，将顶点vi - 1标记为key。顶点vi和vi + 1用来定义新的线段，算法重复直到最后一个点。下图为算法演示：</p>
+<center><img src="http://www.wsh233.cn/file/psimpl_rw.png"/></center>
+<p>红色的条带由指定的容忍值生成，而线段则由原始线的前两个顶点生成。第三个顶点不在红色条带内，意味着该顶点是一个key。通过第二，三顶点定义新的条带，位于条带内的最后一个顶点也标记为key，而其他点则移除。算法重复直到新吊带包含原始线段的最后一个顶点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">ReuWitkamSimplify</span><span class="p">(</span><span class="n">tolorence</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">pts</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sp</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ep</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&#34;bool&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">verDist</span> <span class="o">=</span> <span class="n">point2lineDistance</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">sp</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">sp</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">ep</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">ep</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">verDist</span> <span class="o">&gt;</span> <span class="n">tolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">validFlags</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sp</span> <span class="o">=</span> <span class="n">ep</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ep</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validFlags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">validFlags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">validFlags</span>
+</span></span><span class="line"><span class="cl">            
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">rLine</span> <span class="o">=</span> <span class="n">ReuWitkamSimplify</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">rLine</span><span class="p">],</span> <span class="s2">&#34;Reumann-Witkam&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_21_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">rLine</span> <span class="o">=</span> <span class="n">ReuWitkamSimplify</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">rLine</span><span class="p">],</span> <span class="s2">&#34;Reumann-Witkam&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_22_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<h1 id="opheim">Opheim
+</h1><p>Ophein 使用 最小和最大距离容忍值来约束搜索区域。对于连续的顶点${v_i}$，它与当前${key}$（通常是${v_0}$)的径向距离可以被计算出来。在容忍值范围内的最后一个顶点被用来定义一条射线${R(v_{key} , v_i)}$，如果这样的顶点不存在，那么射线将被定义为${R(v_{key} , v_{key + 1})}$。计算每一个连续的顶点${v_j}$（在${v_i}$后边）与射线${R}$ 间的垂直距离， 当该距离超过最小容忍值或者当${v_j}$与${v_k}$间的辐射距离大于最大容忍值时，在${v_{j-1}}$位置上的顶点，将被认为是一个新${key}$。</p>
+<center><img src="http://www.xiemolin233.cn/file/psimpl_op.png"></center>
+<p>值得注意的是，关于如何定义射线${R(v_{key},v_i)}$ 去控制搜索区域的方法存在多个，可能的方法有如下几种：</p>
+<ol>
+<li>Reumann-Witkam 的方法 : ${i}$ = ${key}$ + 1.</li>
+<li>外部第一个点：${key}$ &lt; ${i}$ 且${v_i}$ 是第一个掉落在最小辐射距离外部的点.</li>
+<li>内部最后一个点：${key}$ &lt; ${i}$ 且 ${v_i}$ 是掉落在最小辐射距离内的最后一个点；若该点不存在，则使用方法1.</li>
+</ol>
+<center><img src="http://www.xiemolin233.cn/file/psimpl_op_ray.png"></center>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">opheimSimplify</span><span class="p">(</span><span class="n">minTolorence</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">maxTolorence</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vKey</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validPtsLst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vKey</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">point2pointDistance</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">minTolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">vi</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vj2rayDist</span> <span class="o">=</span> <span class="n">point2lineDistance</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pts</span><span class="p">[</span><span class="n">vi</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">vi</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">radialDist</span> <span class="o">=</span> <span class="n">point2pointDistance</span><span class="p">(</span><span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">vj2rayDist</span> <span class="o">&lt;=</span> <span class="n">minTolorence</span> <span class="ow">or</span> <span class="n">radialDist</span> <span class="o">&gt;</span> <span class="n">maxTolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">vKey</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">validPtsLst</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validPtsLst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">validPtsLst</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">validPtsLst</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">opheim</span> <span class="o">=</span> <span class="n">opheimSimplify</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">opheim</span><span class="p">],</span> <span class="s2">&#34;opheim&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_28_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">opheim</span> <span class="o">=</span> <span class="n">opheimSimplify</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">opheim</span><span class="p">],</span> <span class="s2">&#34;opheim&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_29_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<h1 id="lang">Lang
+</h1><p>Lang 简化算法定义一个固定大小的搜索区域，它的第一个和最后一个点来自线段的同一个片段——用来计算处于中间的顶点的垂直距离。若任何计算出的距离大于指定的容忍值，那么搜索区域将通过排除其最后一个顶点进行收缩，这个过程会一直重复直到所有垂直距离小于特定的容忍值，或者中间顶点全部排除。所有中间节点移除后，新的搜索区域将以旧搜索区域的最后一个点作为起点进行构建。</p>
+<center><img src="http://www.xiemolin233.cn/file/psimpl_la.png"></center>
+<p>The search region is constructed using a look_ahead value of 4. For each intermediate vertex, its perpendicular distance to the segment S (v0, v4) is calculated. Since at least one distance is greater than the tolerance, the search region is reduced by one vertex. After recalculating the distances to S (v0, v3), all intermediate vertices fall within the tolerance. The last vertex of the search region v3 defines a new key. This process repeats itself by updating the search region and defining a new segment S (v3, v7).</p>
+<p>搜索区域使用前四个顶点来生成。计算每一个中间顶点到片段S(v0, v4)的垂直距离，只要至少存在一个顶点的垂直距离超过容忍值，搜索区域便简化一个顶点。再重复计算中间顶点到片段S(v0, v3)，所有的中间顶点到片段S的垂直距离都位于容忍值内，搜索区域的最后一个顶点v3作为一个新key同时它也用来定义一个新的区域（片段）S(v3, v7)。</p>
+<ol>
+<li>第一个点作为vKey,创建片段S(v0, v4)</li>
+<li>求中间顶点到片段的垂直距离</li>
+<li>片段依次排除最后一个顶点（当距离超过容忍值）</li>
+<li>片段内无顶点的垂直距离超过容忍值，此时最后一个点作为新key，同时构建新片段</li>
+<li>重复1-4</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">langSimplify</span><span class="p">(</span><span class="n">tolorence</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vKey</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validLst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">),),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">maxSteps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">maxSteps</span> <span class="o">=</span> <span class="n">steps</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span>  <span class="n">vKey</span> <span class="o">&lt;</span> <span class="n">maxSteps</span> <span class="ow">and</span> <span class="n">end</span> <span class="o">&lt;</span> <span class="n">maxSteps</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">isBigger</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># print(&#34;segment:(%s，%s)&#34; % (vKey, end))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vKey</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">perDist</span> <span class="o">=</span> <span class="n">point2lineDistance</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">vKey</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">perDist</span> <span class="o">&gt;</span> <span class="n">tolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">isBigger</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">                <span class="n">end</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">isBigger</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">vKey</span> <span class="o">=</span> <span class="n">end</span>
+</span></span><span class="line"><span class="cl">            <span class="n">end</span> <span class="o">+=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">            <span class="n">validLst</span><span class="p">[</span><span class="n">vKey</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validLst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">validLst</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">validLst</span>
+</span></span><span class="line"><span class="cl">            
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">langLine</span> <span class="o">=</span> <span class="n">langSimplify</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">langLine</span><span class="p">],</span> <span class="s2">&#34;Lang&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_37_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">langLine</span> <span class="o">=</span> <span class="n">langSimplify</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="n">langLine</span><span class="p">],</span> <span class="s2">&#34;Lang&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_38_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<h1 id="douglas-peucker">Douglas-Peucker
+</h1><p>Douglas-Peucker算法使用点-边距离作为误差衡量标准。该算法从连接原始Polyline的第一个和最后一个顶点的边开始，计算所有中间顶点到边的距离，距离该边最远的顶点，如果其距离大于指定的公差，将被标记为Key并添加到简化结果中。这个过程将对当前简化中的每条边进行递归，直到原始Polyline的所有顶点与当前考察的边的距离都在允许误差范围内。该过程如下图所示:</p>
+<center>
+    <img src="http://www.xiemolin233.cn/file/psimpl_dp.png"/>
+    </center>
+<p>初始时，简化结果只有一条边（起点-终点）。第一步中，将第四个顶点标记为一个Key，并相应地加入到简化结果中；第二步，处理当前结果中的第一条边，到该边的最大顶点距离低于容差，因此不添加任何点；在第三步中，当前简化的第二个边找到了一个Key（点到边的距离大于容差）。这条边在这个Key处被分割，这个新的Key添加到简化结果中。这个过程一直继续下去，直到找不到新的Key为止。注意，在每个步骤中，只处理当前简化结果的一条边。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">douglasPeuckerSimplify</span><span class="p">(</span><span class="n">tolorence</span><span class="p">,</span> <span class="n">pts</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">findPt</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">curPt</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">maxDist</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">perpenDist</span> <span class="o">=</span> <span class="n">point2lineDistance</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">pts</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">perpenDist</span> <span class="o">&gt;</span> <span class="n">maxDist</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">maxDist</span> <span class="o">=</span> <span class="n">perpenDist</span>
+</span></span><span class="line"><span class="cl">                <span class="n">curPt</span> <span class="o">=</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">maxDist</span> <span class="o">&gt;</span> <span class="n">tolorence</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">preKey</span> <span class="o">=</span> <span class="n">findPt</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">curPt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">postKey</span> <span class="o">=</span> <span class="n">findPt</span><span class="p">(</span><span class="n">curPt</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[]</span> <span class="o">+</span> <span class="n">preKey</span> <span class="o">+</span> <span class="n">postKey</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[</span><span class="n">pts</span><span class="p">[</span><span class="n">end</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span><span class="n">pts</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">findPt</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">douglasPeuckerSimplify</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="s2">&#34;Douglas-Peucker&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_44_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">douglasPeuckerSimplify</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="s2">&#34;Douglas-Peucker&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_45_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">douglasPeuckerSimplify</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">feat</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plotLine</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="s2">&#34;Douglas-Peucker&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​ <br>
+<img src="https://md-1301600412.cos.ap-nanjing.myqcloud.com/gitUse/output_46_0.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="png"
+	
+	
+>
+​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/all-about-gis/tags/%E7%AE%97%E6%B3%95/">算法</a>
+        
+            <a href="/all-about-gis/tags/%E7%BA%BF%E6%AE%B5%E7%AE%80%E5%8C%96/">线段简化</a>
+        
+            <a href="/all-about-gis/tags/python/">Python</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <div id="gitalk-container"></div>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: "",
+        clientSecret: "",
+        repo: "",
+        owner: "",
+        admin: [""],
+        distractionFreeMode: false, 
+        id: md5(location.pathname), 
+        proxy: null ,
+    });
+    (function () {
+        if (
+            ["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1
+        ) {
+            document.getElementById("gitalk-container").innerHTML =
+                "Gitalk comments not available by default when the website is previewed locally.";
+            return;
+        }
+        gitalk.render("gitalk-container");
+    })();
+</script>
+
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 All about GIS
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/all-about-gis/ts/main.1ed0bff976bd5d8484f3d11fe01f53b357aa11fe6ae344626a0173555dd23438.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

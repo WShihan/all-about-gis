@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pages on All about GIS</title>
+        <link>http://localhost:1313/all-about-gis/page/</link>
+        <description>Recent content in Pages on All about GIS</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>All about GIS</copyright>
+        <lastBuildDate>Tue, 28 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/all-about-gis/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>归档</title>
+        <link>http://localhost:1313/all-about-gis/archives/</link>
+        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/all-about-gis/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>查找</title>
+        <link>http://localhost:1313/all-about-gis/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/all-about-gis/search/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>关于</title>
+        <link>http://localhost:1313/all-about-gis/%E5%85%B3%E4%BA%8E/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/all-about-gis/%E5%85%B3%E4%BA%8E/</guid>
+        <description>&lt;p&gt;这是一份与GIS内容相关的仓库，受&lt;a class=&#34;link&#34; href=&#34;https://github.com/AboutRSS/ALL-about-RSS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;All-about-RSS&lt;/a&gt;启发，包含开源软件工具，编程语言库，文章以及数据分享等，刚开始记录，内容不全且很少，欢迎参与完善，你可以通过这个&lt;a href=&#34;./archieve/issuer/README.md&#34;&gt;浏览器插件&lt;/a&gt;提交内容。&lt;/p&gt;
+&lt;p&gt;关于什么是GIS，你可以在如下文章里找到答案：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.usgs.gov/faqs/what-geographic-information-system-gis&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is a geographic information system (GIS)? | U.S. Geological Survey (usgs.gov)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Geographic_information_system&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Geographic information system - Wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.esri.com/en-us/what-is-gis/overview&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is GIS? | Geographic Information System Mapping Technology (esri.com)&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

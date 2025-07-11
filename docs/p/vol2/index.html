@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/all-about-gis/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=all-about-gis/livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="vol·2">
+<title>vol·2</title>
+
+<link rel='canonical' href='http://localhost:1313/all-about-gis/p/vol2/'>
+
+<link rel="stylesheet" href="/all-about-gis/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="vol·2">
+<meta property='og:description' content="vol·2">
+<meta property='og:url' content='http://localhost:1313/all-about-gis/p/vol2/'>
+<meta property='og:site_name' content='All about GIS'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-07-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-08T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="vol·2">
+<meta name="twitter:description" content="vol·2">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/all-about-gis/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/all-about-gis/img/avatar_hu_3f7e7836c53ddc22.png" width="300"
+                            height="316" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/all-about-gis">All about GIS</a></h1>
+            <h2 class="site-description">只关于GIS</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/WShihan/all-about-gis'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/all-about-gis/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>首页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/all-about-gis/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>查找</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#文章">文章</a>
+      <ol>
+        <li><a href="#1多视角航空图像中对地理空间对象进行分类的方法">1.多视角航空图像中对地理空间对象进行分类的方法</a></li>
+        <li><a href="#2arcgis-pro33-对cad和bim支持的新变化">2.ArcGIS Pro3.3 对CAD和BIM支持的新变化</a></li>
+        <li><a href="#3不正当抓取高德地图拥堵延时指数被判赔偿1250万">3.不正当抓取高德地图“拥堵延时指数”，被判赔偿1250万</a></li>
+        <li><a href="#4俄罗斯和美国在地理上仅相隔-24-英里但时间上-相隔21-小时">4.俄罗斯和美国在地理上仅相隔 2.4 英里但时间上 相隔21 小时</a></li>
+        <li><a href="#5比较地图投影">5.比较地图投影</a></li>
+        <li><a href="#6arcgis-pro土地勘测定界软件v29简介">6.ArcGIS Pro土地勘测定界软件V2.9简介</a></li>
+        <li><a href="#7arcgis-故事地图新功能介绍">7.ArcGIS 故事地图新功能介绍</a></li>
+        <li><a href="#8蓝皮书文章丨信息技术应用创新背景下地理信息系统技术的现状与发展展望">8.蓝皮书文章丨信息技术应用创新背景下地理信息系统技术的现状与发展展望</a></li>
+        <li><a href="#9绘制红树林物种地图如何帮助减缓海岸侵蚀">9.绘制红树林物种地图如何帮助减缓海岸侵蚀</a></li>
+        <li><a href="#10地理空间的革命和自动化">10.地理空间的革命和自动化</a></li>
+        <li><a href="#11如何查找arcgis-online-web地图的url并将其添加到qgis">11.如何查找ArcGIS Online Web地图的URL并将其添加到QGIS</a></li>
+        <li><a href="#12如何在arcgis-online查找数据并添加到qgis">12.如何在ArcGIS Online查找数据并添加到QGIS</a></li>
+        <li><a href="#13如何在qgis使用esri文件地理数据库">13.如何在QGIS使用ESRI文件地理数据库</a></li>
+        <li><a href="#14openrouteservice插件更新">14.openrouteservice插件更新</a></li>
+        <li><a href="#15qgis插件更新">15.QGIS插件更新</a></li>
+      </ol>
+    </li>
+    <li><a href="#数据分享">数据分享</a>
+      <ol>
+        <li><a href="#1覆盖欧盟和英国的osm土地利用数据">1.覆盖欧盟和英国的OSM土地利用数据</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/all-about-gis/categories/%E5%90%88%E9%9B%86/" >
+                合集
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/all-about-gis/p/vol2/">vol·2</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            vol·2
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 08, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="文章">文章
+</h2><h3 id="1多视角航空图像中对地理空间对象进行分类的方法">1.多视角航空图像中对地理空间对象进行分类的方法
+</h3><p>【英文】<a class="link" href="https://medium.com/@adhiguna.mahendra/multiview-aerial-imagery-for-geospatial-object-classification-741c460919ba"  target="_blank" rel="noopener"
+    >Multiview aerial imagery for geospatial object classification | by adhiguna mahendra | Jun, 2024 | Medium</a>
+介绍一种利用语义网格从多视角航空图像中对地理空间对象进行分类的新方法，将其与传统方法进行对比，并探讨其在林业和农业中的商业应用。</p>
+<h3 id="2arcgis-pro33-对cad和bim支持的新变化">2.ArcGIS Pro3.3 对CAD和BIM支持的新变化
+</h3><p>【英文】<a class="link" href="https://www.esri.com/arcgis-blog/products/arcgis-pro/announcements/whats-new-for-cad-bim-in-arcgis-pro-3-3/"  target="_blank" rel="noopener"
+    >What’s new for CAD and BIM in ArcGIS Pro 3.3</a>
+ArcGIS Pro对CAD和BIM支持的新变化。</p>
+<h3 id="3不正当抓取高德地图拥堵延时指数被判赔偿1250万">3.不正当抓取高德地图“拥堵延时指数”，被判赔偿1250万
+</h3><p>【中文】<a class="link" href="https://mp.weixin.qq.com/s/LbuFHI1OB3aliVJLA3y7FQ"  target="_blank" rel="noopener"
+    >不正当抓取高德地图“拥堵延时指数”，被判赔偿1250万</a>
+国内一家金融公司通过爬虫手段爬取高德地图“拥挤延时指数”数据用于盈利，被告后一审认定不正当竞争赔付1250万。
+“拥堵延时指数”大致可以理解为道路上的车辆实际通行时间与完全畅通情况下车辆通行时间的比值。比值越高，城市拥堵程度越严重；比值越低，城市拥堵情况越轻微。</p>
+<h3 id="4俄罗斯和美国在地理上仅相隔-24-英里但时间上-相隔21-小时">4.俄罗斯和美国在地理上仅相隔 2.4 英里但时间上 相隔21 小时
+</h3><p>【英文】<a class="link" href="https://www.geographyrealm.com/separated-by-2-4-miles-and-21-hours/"  target="_blank" rel="noopener"
+    >These Two Countries are Separated by 2.4 Miles and 21 Hours </a>
+俄罗斯和美国在地理上仅相隔 2.4 英里但时间上 相隔21 小时</p>
+<h3 id="5比较地图投影">5.比较地图投影
+</h3><p>【英文】<a class="link" href="https://map-projections.net/"  target="_blank" rel="noopener"
+    >比较地图投影</a>
+介绍地图投影并分享观点的博客</p>
+<h3 id="6arcgis-pro土地勘测定界软件v29简介">6.ArcGIS Pro土地勘测定界软件V2.9简介
+</h3><p>【中文】<a class="link" href="https://mp.weixin.qq.com/s/qTGZgSHFBLagLQYu8R2Jlw"  target="_blank" rel="noopener"
+    >ArcGIS Pro土地勘测定界软件V2.9简介</a>
+专绘领域软件介绍</p>
+<h3 id="7arcgis-故事地图新功能介绍">7.ArcGIS 故事地图新功能介绍
+</h3><p>【英文】<a class="link" href="https://www.esri.com/arcgis-blog/products/arcgis-online/announcements/explore-the-newest-additions-to-storymaps/"  target="_blank" rel="noopener"
+    >Explore the Newest Additions to StoryMaps</a>
+ArcGIS 故事地图新功能介绍。</p>
+<h3 id="8蓝皮书文章丨信息技术应用创新背景下地理信息系统技术的现状与发展展望">8.蓝皮书文章丨信息技术应用创新背景下地理信息系统技术的现状与发展展望
+</h3><p>【中文】<a class="link" href="https://mp.weixin.qq.com/s/IXi4xsXC5PgBtq_CDmUoFQ"  target="_blank" rel="noopener"
+    >蓝皮书文章丨信息技术应用创新背景下地理信息系统技术的现状与发展展望</a>
+地理信息技术展望</p>
+<h3 id="9绘制红树林物种地图如何帮助减缓海岸侵蚀">9.绘制红树林物种地图如何帮助减缓海岸侵蚀
+</h3><p>【英文】<a class="link" href="https://www.geographyrealm.com/mapping-mangrove-species/"  target="_blank" rel="noopener"
+    >绘制红树林物种地图如何帮助减缓海岸侵蚀</a>
+一些红树林物种在保护沿海地区以及为社区提供重要资源方面变得至关重要。它们的损失可能对这些社区有害;然而，如果没有更好的地图数据和改进的建模，就不可能了解这种损失。</p>
+<h3 id="10地理空间的革命和自动化">10.地理空间的革命和自动化
+</h3><p>【英文】<a class="link" href="https://medium.com/@bpmatroja/innovation-and-automation-in-the-geospatial-space-bb6b3517a92c"  target="_blank" rel="noopener"
+    >地理空间的革命和自动化</a>
+介绍地理空间领域的最新创新和自动化趋势，看看AI是如何引起浪潮。</p>
+<h3 id="11如何查找arcgis-online-web地图的url并将其添加到qgis">11.如何查找ArcGIS Online Web地图的URL并将其添加到QGIS
+</h3><p>【中文】<a class="link" href="https://www.geographyrealm.com/url-arcgis-rest-server-layer-qgis/"  target="_blank" rel="noopener"
+    >如何查找ArcGIS Online Web地图的URL并将其添加到QGIS</a>
+ArcGIS Online上托管有许多精美的地图，在制作地图时，如果没有合适的底图，不妨在上面找找看，本文介绍如何获取ArcGIS Online上的在线地图服务地址，然后添加到QGIS项目。</p>
+<h3 id="12如何在arcgis-online查找数据并添加到qgis">12.如何在ArcGIS Online查找数据并添加到QGIS
+</h3><p>【英文】<a class="link" href="https://www.geographyrealm.com/how-to-add-data-from-arcgis-online-to-qgis/"  target="_blank" rel="noopener"
+    >How to Add Data from ArcGIS Online to QGIS</a>
+教程，如何在ArcGIS Online查找数据并添加到QGIS。</p>
+<h3 id="13如何在qgis使用esri文件地理数据库">13.如何在QGIS使用ESRI文件地理数据库
+</h3><p>【英文】<a class="link" href="https://www.geographyrealm.com/esri-file-geodatabases-qgis/"  target="_blank" rel="noopener"
+    >How to Use Esri File Geodatabases in QGIS</a>
+一篇教授如何在QGIS使用ESRI文件地理数据库的教程。</p>
+<h3 id="14openrouteservice插件更新">14.openrouteservice插件更新
+</h3><p>【英文】<a class="link" href="https://giscienceblog.uni-heidelberg.de/2024/06/11/enhancements-in-the-qgis-plugin-for-openrouteservice/"  target="_blank" rel="noopener"
+    >openrouteservice插件更新</a>
+openrouteservice是一款开源的QGIS插件，提供一系列路径分析功能，文章介绍此次插件更新的内容</p>
+<h3 id="15qgis插件更新">15.QGIS插件更新
+</h3><p>【英文】<a class="link" href="https://blog.qgis.org/2024/07/01/plugin-update-february-to-march-2024/"  target="_blank" rel="noopener"
+    >QGIS插件更新</a>
+2024年3月至4月，QGIS插件发布列表。</p>
+<h2 id="数据分享">数据分享
+</h2><h3 id="1覆盖欧盟和英国的osm土地利用数据">1.覆盖欧盟和英国的OSM土地利用数据
+</h3><p><a class="link" href="https://giscienceblog.uni-heidelberg.de/2024/07/03/osm-landuse-data-is-available-in-heidata/"  target="_blank" rel="noopener"
+    >OSM Landuse Data is available in HeiData – GIScience Blog</a>
+覆盖欧盟和英国的OSM土地利用数据，通过深度学习对Sentinel-2影像识别得到。</p>
+<hr>
+<p><a class="link" href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh-hans"  target="_blank" rel="noopener"
+    >版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/all-about-gis/p/vol7/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">vol·7</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/all-about-gis/p/vol6/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">vol·6</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/all-about-gis/p/vol5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">vol·5</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/all-about-gis/p/vol4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">vol·4</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/all-about-gis/p/vol3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">vol·3</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div id="gitalk-container"></div>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.18.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: "",
+        clientSecret: "",
+        repo: "",
+        owner: "",
+        admin: [""],
+        distractionFreeMode: false, 
+        id: md5(location.pathname), 
+        proxy: null ,
+    });
+    (function () {
+        if (
+            ["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1
+        ) {
+            document.getElementById("gitalk-container").innerHTML =
+                "Gitalk comments not available by default when the website is previewed locally.";
+            return;
+        }
+        gitalk.render("gitalk-container");
+    })();
+</script>
+
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 All about GIS
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/all-about-gis/ts/main.1ed0bff976bd5d8484f3d11fe01f53b357aa11fe6ae344626a0173555dd23438.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
